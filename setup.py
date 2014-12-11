@@ -137,7 +137,8 @@ setup(
         'boto>=2.1.0'
     ],
     tests_require=[
-        'mock>=1.0.1'
+        'mock>=1.0.1',
+        'django-discover-runner',
     ],
     test_suite='runtests',
     include_package_data=True,

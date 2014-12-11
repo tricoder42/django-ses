@@ -6,35 +6,16 @@ kick off the test suite.
 
 ## The Code
 """
+# coding utf-8
+from __future__ import unicode_literals
 
-# Setup and configure the minimal settings necessary to
-# run the test suite.  Note that Django requires that the
-# `DATABASES` value be present and configured in order to
-# do anything.
-
-from django.conf import settings
-
-settings.configure(
-    INSTALLED_APPS=[
-        "django_ses",
-    ],
-    DATABASES={
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": ":memory:",
-        }
-    },
-    MIDDLEWARE_CLASSES=('django.middleware.common.CommonMiddleware',
-                        'django.middleware.csrf.CsrfViewMiddleware'),
-    ROOT_URLCONF='django_ses.tests.test_urls',
-)
-
+import os
 import django
-try:
-    django.setup()
-except AttributeError:
-    pass
-
-# Start the test suite now that the settings are configured.
 from django.core.management import call_command
-call_command("test", "django_ses")
+
+os.environ['DJANGO_SETTINGS_MODULE'] = 'tests.settings'
+
+if django.VERSION[:2] >= (1, 7):
+    django.setup()
+
+call_command("test", "tests", settings='tests.settings')
