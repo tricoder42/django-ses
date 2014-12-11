@@ -1,8 +1,30 @@
 language: python
 python:
-  - 2.6
+  # - 2.6 -- tested, but only for few Django versions
   - 2.7
-script: detox
-notifications:
-  email: false
-  irc: false
+  - 3.2
+  - 3.3
+  - 3.4
+
+env:
+  - DJANGO=django<1.5
+  - DJANGO=django<1.6
+  - DJANGO=django<1.7
+  - DJANGO=django<1.8
+  - DJANGO=https://github.com/django/django/tarball/master
+
+matrix:
+  include:
+    - python: 2.6
+      env: DJANGO=django<1.5
+    - python: 2.6
+      env: DJANGO=django<1.6
+
+install:
+  - pip install $DJANGO
+  - pip install .
+
+script:
+  - python --version
+  - django-admin.py --version
+  - python setup.py -q test
