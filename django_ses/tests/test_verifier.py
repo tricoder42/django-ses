@@ -39,17 +39,21 @@ class BounceMessageVerifierTest(TestCase):
                     self.assertEqual(verifier.certificate, load_cert_string.return_value)
 
     def test_is_verified(self):
-        verifier = BounceMessageVerifier({'Signature': base64.b64encode('Spam & Eggs')})
+        verifier = BounceMessageVerifier({
+            'Signature': base64.b64encode(b'Spam & Eggs')
+        })
         verifier._certificate = mock.Mock()
         verify_final = verifier._certificate.get_pubkey.return_value.verify_final
         verify_final.return_value = 1
         with mock.patch.object(verifier, '_get_bytes_to_sign'):
             self.assertTrue(verifier.is_verified())
 
-        verify_final.assert_called_once_with('Spam & Eggs')
+        verify_final.assert_called_once_with(b'Spam & Eggs')
 
     def test_is_verified_bad_value(self):
-        verifier = BounceMessageVerifier({'Signature': base64.b64encode('Spam & Eggs')})
+        verifier = BounceMessageVerifier({
+            'Signature': base64.b64encode(b'Spam & Eggs')
+        })
         verifier._certificate = mock.Mock()
         verifier._certificate.get_pubkey.return_value.verify_final.return_value = 0
         with mock.patch.object(verifier, '_get_bytes_to_sign'):
