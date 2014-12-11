@@ -4,6 +4,8 @@ from __future__ import unicode_literals
 import os.path
 import django
 
+SECRET_KEY = 42
+
 INSTALLED_APPS = ['django_ses']
 DATABASES = {
     "default": {
@@ -20,4 +22,7 @@ MIDDLEWARE_CLASSES = (
 TEST_DISCOVER_TOP_LEVEL = os.path.dirname(__file__)
 
 if django.VERSION[:2] < (1, 6):
-    TEST_RUNNER = b'discover_runner.DiscoverRunner'
+    # I don't get it...
+    # Python 3.x complains, when test runner is specified as a byte string
+    # Python 2.x/Django 1.4 complains, when it's an unicode
+    TEST_RUNNER = str('discover_runner.DiscoverRunner')
