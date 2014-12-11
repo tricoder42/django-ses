@@ -17,6 +17,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.views.decorators.http import require_POST
 from django.core.cache import cache
 from django.core.exceptions import PermissionDenied
+from django.utils.encoding import smart_text
 from django.utils.six.moves import urllib
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -194,7 +195,7 @@ def handle_bounce(request):
         raw_json = request.raw_post_data
 
     try:
-        notification = json.loads(raw_json)
+        notification = json.loads(smart_text(raw_json))
     except ValueError as e:
         # TODO: What kind of response should be returned here?
         logger.warning('Recieved bounce with bad JSON: "%s"', e)

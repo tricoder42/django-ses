@@ -160,12 +160,13 @@ class SESBackend(BaseEmailBackend):
                 response = self.connection.send_raw_email(
                     source=source or message.from_email,
                     destinations=message.recipients(),
-                    raw_message=unicode(dkim_sign(message.message().as_string(),
-                                                  dkim_key=self.dkim_key,
-                                                  dkim_domain=self.dkim_domain,
-                                                  dkim_selector=self.dkim_selector,
-                                                  dkim_headers=self.dkim_headers,
-                                                  ), 'utf-8')
+                    raw_message=dkim_sign(
+                        message.message().as_string(),
+                        dkim_key=self.dkim_key,
+                        dkim_domain=self.dkim_domain,
+                        dkim_selector=self.dkim_selector,
+                        dkim_headers=self.dkim_headers,
+                    )
                 )
                 message.extra_headers['status'] = 200
                 message.extra_headers['message_id'] = response[
