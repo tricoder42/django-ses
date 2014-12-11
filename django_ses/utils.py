@@ -1,14 +1,16 @@
 import base64
 import logging
-from urlparse import urlparse
-
-try:
-    from cStringIO import StringIO
-except ImportError:
-    from StringIO import StringIO
 
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.encoding import smart_str
+from django.utils.six.moves import urllib
+
+try:
+    from django.utils.six.moves import cStringIO
+    StringIO = cStringIO.StringIO
+except:
+    from django.utils.six import StringIO
+
 from django_ses import settings
 
 logger = logging.getLogger(__name__)
@@ -107,7 +109,7 @@ class BounceMessageVerifier(object):
             # false as we couldn't verify the message.
             try:
                 self._certificate = M2Crypto.X509.load_cert_string(response.content)
-            except M2Crypto.X509.X509Error, e:
+            except M2Crypto.X509.X509Error as e:
                 logger.warning('Could not load certificate from %s: "%s"', cert_url, e)
                 self._certificate = None
             
@@ -124,7 +126,7 @@ class BounceMessageVerifier(object):
         cert_url = self._data.get('SigningCertURL')
         if cert_url:
             if cert_url.startswith('https://'):
-                url_obj = urlparse(cert_url)
+                url_obj = urllib.parse.urlparse(cert_url)
                 for trusted_domain in settings.BOUNCE_CERT_DOMAINS:
                     parts = trusted_domain.split('.')
                     if url_obj.netloc.split('.')[-len(parts):] == parts:
