@@ -132,6 +132,13 @@ setup(
     long_description=LONG_DESCRIPTION,
     platforms=['any'],
     classifiers=CLASSIFIERS,
-    install_requires=['boto>=2.1.0'],
+    install_requires=[
+        'django>=1.4',
+        'boto>=2.1.0'
+    ],
+    tests_require=[
+        'mock>=1.0.1'
+    ],
+    test_suite='runtests',
     include_package_data=True,
 )
