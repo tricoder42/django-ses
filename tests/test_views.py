@@ -18,6 +18,8 @@ class HandleBounceTest(TestCase):
     """
     Test the bounce web hook handler.
     """
+    urls = 'tests.test_urls'
+
     def setUp(self):
         self._old_bounce_receivers = bounce_received.receivers
         bounce_received.receivers = []

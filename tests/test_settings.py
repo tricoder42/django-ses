@@ -3,7 +3,8 @@ from __future__ import unicode_literals
 
 from django.test import TestCase
 from django.conf import settings
-from django_ses.tests.utils import unload_django_ses
+
+from .utils import unload_django_ses
 
 class SettingsImportTest(TestCase):
     def test_aws_access_key_given(self):
