@@ -14,7 +14,11 @@ try:
 except ImportError:
     M2Crypto = None
 
-from unittest import TestCase, skipIf
+try:
+    from unittest import skipIf
+except ImportError:
+    from django.utils.unittest import skipIf
+from django.test import TestCase
 
 from django_ses.utils import BounceMessageVerifier
 
