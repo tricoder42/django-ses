@@ -1,3 +1,6 @@
+# coding: utf-8
+from __future__ import unicode_literals
+
 from django.test import TestCase
 from django.conf import settings
 from django_ses.tests.utils import unload_django_ses

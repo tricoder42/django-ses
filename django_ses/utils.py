@@ -1,3 +1,6 @@
+# coding: utf-8
+from __future__ import unicode_literals
+
 import base64
 import logging
 
@@ -8,7 +11,7 @@ from django.utils.six.moves import urllib
 try:
     from django.utils.six.moves import cStringIO
     StringIO = cStringIO.StringIO
-except:
+except (ImportError, AttributeError):
     from django.utils.six import StringIO
 
 from django_ses import settings
