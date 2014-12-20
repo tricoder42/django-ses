@@ -120,13 +120,13 @@ CLASSIFIERS = [
 ]
 
 setup(
-    name='django-ses',
+    name='django-ses3',
     version='0.7.0',  # When changing this, remember to change it in __init__.py
     packages=find_packages(exclude=['example']),
     package_data=package_data,
-    author='Harry Marr',
-    author_email='harry@hmarr.com',
-    url='http://github.com/hmarr/django-ses/',
+    author='Tomáš Ehrlich',
+    author_email='tomas.ehrlich@gmail.com',
+    url='http://github.com/tricoder42/django-ses/',
     license='MIT',
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
